@@ -80,10 +80,12 @@ export const BingoGrid = ({
 
       // 生成 canvas
       const canvas = await html2canvas(tempDiv, {
-        backgroundColor: '#1a1a2e',
+        backgroundColor: '#0f0f23',
         scale: 3,
         useCORS: true,
         allowTaint: true,
+        logging: false,
+        removeContainer: true,
       });
 
       // 清理臨時元素
