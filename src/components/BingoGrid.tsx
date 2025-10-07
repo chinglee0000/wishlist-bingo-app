@@ -87,11 +87,10 @@ export const BingoGrid = ({
               <div style="
                 background-color: ${bgColor};
                 color: ${textColor};
-                padding: 8px;
+                padding: 8px 8px 12px 8px;
                 border-radius: 8px;
                 font-size: 12px;
                 text-align: center;
-                transform: translateY(-4px);
                 aspect-ratio: 1;
                 display: flex;
                 flex-direction: column;
