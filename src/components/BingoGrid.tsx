@@ -55,10 +55,14 @@ export const BingoGrid = ({
       shareContainer.style.top = '-9999px';
       shareContainer.style.left = '-9999px';
       shareContainer.style.width = '400px';
+      shareContainer.style.height = 'auto';
+      shareContainer.style.maxHeight = '600px';
       shareContainer.style.padding = '20px';
       shareContainer.style.backgroundColor = '#1a1a2e';
       shareContainer.style.borderRadius = '12px';
       shareContainer.style.fontFamily = 'system-ui, -apple-system, sans-serif';
+      shareContainer.style.overflow = 'hidden';
+      shareContainer.style.boxSizing = 'border-box';
 
       shareContainer.innerHTML = `
         <div style="text-align: center; margin-bottom: 20px;">
@@ -66,7 +70,7 @@ export const BingoGrid = ({
             ${category.icon} ${categoryName}
           </h2>
         </div>
-        <div style="display: grid; grid-template-columns: repeat(${gridSize}, 1fr); gap: 8px; margin-bottom: 20px;">
+        <div style="display: grid; grid-template-columns: repeat(${gridSize}, 1fr); gap: 8px; margin-bottom: 20px; width: 100%; max-width: 360px; margin-left: auto; margin-right: auto;">
           ${goals.map(goal => {
             const rating = ratings.get(goal.id) || 0;
             const bgColor = rating === 1 ? '#3b82f6' : rating === 2 ? '#22c55e' : rating === 3 ? '#eab308' : 'rgba(255,255,255,0.1)';
@@ -99,6 +103,9 @@ export const BingoGrid = ({
                 word-wrap: break-word;
                 hyphens: auto;
                 position: relative;
+                min-height: 60px;
+                max-height: 80px;
+                overflow: hidden;
               ">
                 <div style="flex: 1; display: flex; align-items: center; justify-content: center; line-height: 1.2; transform: translateY(-4px);">
                   ${goal.text}
