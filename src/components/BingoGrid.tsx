@@ -42,7 +42,6 @@ export const BingoGrid = ({
 
   const handleShare = async () => {
     const categoryName = subcategoryName || category.name;
-    const shareText = `我在${categoryName}許願BINGO完成了 ${completedCount}/${totalCount} 個目標！`;
 
     try {
       toast({
@@ -50,69 +49,42 @@ export const BingoGrid = ({
         description: "即將打開分享選項",
       });
 
-      // 創建專門用於分享的容器
+      // 找到標題和賓果網格元素
+      const headerElement = document.querySelector('.bingo-container h1');
+      const gridElement = document.querySelector('.bingo-container .grid');
+
+      if (!gridElement || !headerElement) {
+        throw new Error('找不到賓果元素');
+      }
+
+      // 創建分享專用容器
       const shareContainer = document.createElement('div');
       shareContainer.style.position = 'fixed';
       shareContainer.style.top = '-9999px';
       shareContainer.style.left = '-9999px';
-      shareContainer.style.width = '400px';
       shareContainer.style.padding = '20px';
       shareContainer.style.backgroundColor = '#1a1a2e';
       shareContainer.style.borderRadius = '12px';
+      shareContainer.style.maxWidth = '400px';
       shareContainer.style.fontFamily = 'system-ui, -apple-system, sans-serif';
 
-      shareContainer.innerHTML = `
-        <div style="text-align: center; margin-bottom: 20px;">
-          <h2 style="color: white; font-size: 24px; font-weight: bold; margin-bottom: 8px;">
-            ${category.icon} ${categoryName}
-          </h2>
-        </div>
-        <div style="display: grid; grid-template-columns: repeat(${gridSize}, 1fr); gap: 8px; margin-bottom: 20px;">
-          ${goals.map(goal => {
-            const rating = ratings.get(goal.id) || 0;
-            const bgColor = rating === 1 ? '#3b82f6' : rating === 2 ? '#22c55e' : rating === 3 ? '#eab308' : 'rgba(255,255,255,0.1)';
-            const textColor = rating === 3 ? '#000' : '#fff';
+      // 複製標題
+      const clonedHeader = headerElement.cloneNode(true) as HTMLElement;
+      clonedHeader.style.marginBottom = '20px';
+      shareContainer.appendChild(clonedHeader);
 
-            // 生成星星，對應 BingoCard 的邏輯
-            const starsHtml = rating > 0 ? `
-              <div style="display: flex; gap: 2px; margin-top: 4px; justify-content: center;">
-                ${Array.from({ length: 3 }, (_, index) => {
-                  const isFilled = index < rating;
-                  const starColor = rating === 3 ? (isFilled ? '#000' : 'rgba(0,0,0,0.3)') : (isFilled ? '#fff' : 'rgba(255,255,255,0.3)');
-                  return `<span style="color: ${starColor}; font-size: 10px;">★</span>`;
-                }).join('')}
-              </div>
-            ` : '';
+      // 複製賓果網格
+      const clonedGrid = gridElement.cloneNode(true) as HTMLElement;
+      clonedGrid.style.marginBottom = '20px';
+      shareContainer.appendChild(clonedGrid);
 
-            return `
-              <div style="
-                background-color: ${bgColor};
-                color: ${textColor};
-                padding: 8px;
-                border-radius: 8px;
-                font-size: 11px;
-                text-align: center;
-                aspect-ratio: 1;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                word-wrap: break-word;
-                hyphens: auto;
-                position: relative;
-              ">
-                <div style="flex: 1; display: flex; align-items: center; justify-content: center; line-height: 1.2;">
-                  ${goal.text}
-                </div>
-                ${starsHtml}
-              </div>
-            `;
-          }).join('')}
-        </div>
-        <div style="text-align: center; color: rgba(255,255,255,0.6); font-size: 12px;">
-          Powered by Zoo Financial
-        </div>
-      `;
+      // 添加 "Powered by Zoo Financial"
+      const footer = document.createElement('div');
+      footer.style.textAlign = 'center';
+      footer.style.color = 'rgba(255,255,255,0.6)';
+      footer.style.fontSize = '12px';
+      footer.textContent = 'Powered by Zoo Financial';
+      shareContainer.appendChild(footer);
 
       document.body.appendChild(shareContainer);
 
@@ -121,6 +93,7 @@ export const BingoGrid = ({
         scale: 2,
         useCORS: true,
         allowTaint: true,
+        foreignObjectRendering: true,
       });
 
       document.body.removeChild(shareContainer);
@@ -160,7 +133,7 @@ export const BingoGrid = ({
       </div>
 
       {/* Bingo Grid */}
-      <div 
+      <div
         className={cn(
           "grid gap-2 sm:gap-3 md:gap-4 mb-8 animate-scale-in mx-auto max-w-lg md:max-w-2xl",
           gridSize === 4 && "grid-cols-4",
