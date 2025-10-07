@@ -100,7 +100,7 @@ export const BingoGrid = ({
                 hyphens: auto;
                 position: relative;
               ">
-                <div style="flex: 1; display: flex; align-items: center; justify-content: center; line-height: 1.2;">
+                <div style="flex: 1; display: flex; align-items: center; justify-content: center; line-height: 1.2; ${rating === 0 ? 'padding-bottom: 16px;' : ''}">
                   ${goal.text}
                 </div>
                 ${starsHtml}
