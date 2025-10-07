@@ -47,7 +47,7 @@ export const BingoGrid = ({
         description: "即將打開分享選項",
       });
 
-      // 最簡單的測試：直接截取整個頁面
+      // 生成 canvas
       const canvas = await html2canvas(document.body, {
         backgroundColor: '#1a1a2e',
         scale: 1,
@@ -55,6 +55,13 @@ export const BingoGrid = ({
         allowTaint: true,
       });
 
+      // 測試：直接下載圖片來檢查 canvas 是否正常
+      const link = document.createElement('a');
+      link.download = 'test-bingo.png';
+      link.href = canvas.toDataURL();
+      link.click();
+
+      // 然後再嘗試分享
       const success = await shareToInstagramStory(canvas);
 
       if (success) {
