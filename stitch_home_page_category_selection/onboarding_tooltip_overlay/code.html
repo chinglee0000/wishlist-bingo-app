@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Wishlist BINGO - Gameplay Hint</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#4A90E2",
+                        "background-light": "#FFFFFF",
+                        "background-dark": "#121212",
+                        "surface-light": "#FFFFFF",
+                        "surface-dark": "#1E1E1E",
+                        "text-primary-light": "#111821",
+                        "text-primary-dark": "#FFFFFF",
+                        "text-secondary-light": "#6B7280",
+                        "text-secondary-dark": "#A0A0A0"
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.75rem",
+                        "lg": "1rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-display bg-background-light dark:bg-background-dark">
+<div class="fixed inset-0 flex items-center justify-center bg-black/50">
+<div class="bg-surface-light dark:bg-surface-dark rounded-lg w-11/12 max-w-sm p-8 text-center flex flex-col items-center gap-6">
+<h2 class="text-xl font-bold text-text-primary-light dark:text-text-primary-dark">
+                玩法提示
+            </h2>
+<p class="text-text-secondary-light dark:text-text-secondary-dark text-base">
+                點擊格子來標記進度，每個格子最多可以點擊三次喔！
+            </p>
+<button class="bg-primary text-white font-bold py-3 px-6 rounded-full w-full max-w-xs transition-opacity hover:opacity-90">
+                我知道了
+            </button>
+</div>
+</div>
+
+</body></html>

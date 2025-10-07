@@ -66,31 +66,45 @@ export const BingoGrid = ({
           <h2 style="color: white; font-size: 24px; font-weight: bold; margin-bottom: 8px;">
             ${category.icon} ${categoryName}
           </h2>
-          <p style="color: rgba(255,255,255,0.8); font-size: 16px;">
-            完成進度: ${completedCount}/${totalCount}
-          </p>
         </div>
         <div style="display: grid; grid-template-columns: repeat(${gridSize}, 1fr); gap: 8px; margin-bottom: 20px;">
           ${goals.map(goal => {
             const rating = ratings.get(goal.id) || 0;
             const bgColor = rating === 1 ? '#3b82f6' : rating === 2 ? '#22c55e' : rating === 3 ? '#eab308' : 'rgba(255,255,255,0.1)';
             const textColor = rating === 3 ? '#000' : '#fff';
+
+            // 生成星星，對應 BingoCard 的邏輯
+            const starsHtml = rating > 0 ? `
+              <div style="display: flex; gap: 2px; margin-top: 4px; justify-content: center;">
+                ${Array.from({ length: 3 }, (_, index) => {
+                  const isFilled = index < rating;
+                  const starColor = rating === 3 ? (isFilled ? '#000' : 'rgba(0,0,0,0.3)') : (isFilled ? '#fff' : 'rgba(255,255,255,0.3)');
+                  return `<span style="color: ${starColor}; font-size: 10px;">★</span>`;
+                }).join('')}
+              </div>
+            ` : '';
+
             return `
               <div style="
                 background-color: ${bgColor};
                 color: ${textColor};
-                padding: 12px;
+                padding: 8px;
                 border-radius: 8px;
-                font-size: 12px;
+                font-size: 11px;
                 text-align: center;
-                min-height: 60px;
+                aspect-ratio: 1;
                 display: flex;
+                flex-direction: column;
                 align-items: center;
                 justify-content: center;
                 word-wrap: break-word;
                 hyphens: auto;
+                position: relative;
               ">
-                ${goal.text}
+                <div style="flex: 1; display: flex; align-items: center; justify-content: center; line-height: 1.2;">
+                  ${goal.text}
+                </div>
+                ${starsHtml}
               </div>
             `;
           }).join('')}
