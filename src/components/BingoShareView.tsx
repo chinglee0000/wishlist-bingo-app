@@ -62,7 +62,7 @@ export const BingoShareView = ({
   const totalCount = gridSize * gridSize;
 
   return (
-    <div className="w-full mx-auto p-4" style={{ backgroundColor: '#0f0f23' }}>
+    <div className="w-full mx-auto p-4" style={{ backgroundColor: '#000000' }}>
       {/* Header */}
       <div className="text-center mb-6">
         <h1 className="text-2xl font-bold text-white mb-4 flex items-center justify-center gap-3">

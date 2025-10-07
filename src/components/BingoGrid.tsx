@@ -84,8 +84,11 @@ export const BingoGrid = ({
         scale: 3,
         useCORS: true,
         allowTaint: true,
-        logging: false,
+        logging: true,
         removeContainer: true,
+        foreignObjectRendering: false,
+        imageTimeout: 0,
+        ignoreElements: () => false,
       });
 
       // 清理臨時元素
