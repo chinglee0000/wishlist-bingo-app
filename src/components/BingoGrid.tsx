@@ -89,7 +89,7 @@ export const BingoGrid = ({
                 color: ${textColor};
                 padding: 8px;
                 border-radius: 8px;
-                font-size: 11px;
+                font-size: 12px;
                 text-align: center;
                 aspect-ratio: 1;
                 display: flex;
