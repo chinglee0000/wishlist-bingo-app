@@ -91,6 +91,7 @@ export const BingoGrid = ({
                 border-radius: 8px;
                 font-size: 12px;
                 text-align: center;
+                transform: translateY(-4px);
                 aspect-ratio: 1;
                 display: flex;
                 flex-direction: column;
