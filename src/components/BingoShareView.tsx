@@ -66,7 +66,7 @@ export const BingoShareView = ({
       {/* Header */}
       <div className="text-center mb-6">
         <h1 className="text-2xl font-bold text-white mb-4 flex items-center justify-center gap-3">
-          <span className="text-2xl">{category.icon}</span>
+          <span className="material-icons text-2xl">{category.icon}</span>
           {subcategoryName || category.name}
         </h1>
       </div>

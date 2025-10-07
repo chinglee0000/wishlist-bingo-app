@@ -129,24 +129,54 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
-    background: var(--gradient-main);
+    background: url('/backgrounds/bg-dark-blue.png'), var(--gradient-main);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
     min-height: 100vh;
+  }
+
+  /* Background utility classes */
+  .bg-main {
+    background-image: url('/backgrounds/bg-dark-blue.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+  }
+
+  .bg-shareview {
+    background-image: url('/backgrounds/bg-dark-blue.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
   }
 }
 
 @layer utilities {
   .bingo-card {
-    @apply rounded-xl border border-border/50;
     background-image: var(--gradient-card);
     box-shadow: var(--shadow-card);
     backdrop-filter: blur(10px);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .bingo-card.rating-1 {
+    background-color: #3b82f6 !important;
+    background-image: none !important;
+  }
+
+  .bingo-card.rating-2 {
+    background-color: #22c55e !important;
+    background-image: none !important;
+  }
+
+  .bingo-card.rating-3 {
+    background-color: #eab308 !important;
+    background-image: none !important;
   }
   
-  .bingo-card:hover {
-    box-shadow: var(--shadow-hover);
-    transform: translateY(-2px) scale(1.02);
-  }
+
   
   .bingo-card.completed {
     @apply bg-primary/20 border-primary;

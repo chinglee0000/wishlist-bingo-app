@@ -219,21 +219,21 @@ export const categories: BingoCategory[] = [
   {
     id: "finance",
     name: "投資理財",
-    icon: "💰",
+    icon: "savings",
     className: "category-finance",
     gridSize: 5,
   },
   {
     id: "travel",
     name: "夢想旅遊",
-    icon: "✈️",
+    icon: "flight_takeoff",
     className: "category-travel",
     gridSize: 5,
   },
   {
     id: "lifestyle",
     name: "生活享受",
-    icon: "🍜",
+    icon: "restaurant",
     className: "category-lifestyle",
     gridSize: 4,
     subcategories: [
@@ -260,7 +260,7 @@ export const categories: BingoCategory[] = [
   {
     id: "learning",
     name: "學習成長",
-    icon: "🦉",
+    icon: "school",
     className: "category-learning",
     gridSize: 4,
     subcategories: [
@@ -287,7 +287,7 @@ export const categories: BingoCategory[] = [
   {
     id: "relationships",
     name: "人際關係",
-    icon: "👥",
+    icon: "group",
     className: "category-relationships",
     gridSize: 4,
   },

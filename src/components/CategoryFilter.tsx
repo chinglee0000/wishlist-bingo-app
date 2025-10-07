@@ -33,7 +33,7 @@ export const CategoryFilter = ({
           )}
           onClick={() => onCategoryChange(category.id)}
         >
-          <span className="text-lg">{category.icon}</span>
+          <span className="material-icons text-lg">{category.icon}</span>
           <span>{category.name}</span>
         </button>
       ))}

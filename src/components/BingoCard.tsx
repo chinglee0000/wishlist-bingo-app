@@ -11,19 +11,21 @@ interface BingoCardProps {
   isLocked?: boolean;
 }
 
-// 顏色：1星藍、2星綠、3星黃（含邊框色）
+// 邊框顏色和背景類別
 const getRatingColor = (rating: number) => {
   switch (rating) {
     case 1:
-      return "bg-blue-500 border-blue-400";
+      return "border-blue-400 rating-1";
     case 2:
-      return "bg-green-500 border-green-400";
+      return "border-green-400 rating-2";
     case 3:
-      return "bg-yellow-500 border-yellow-400";
+      return "border-yellow-400 rating-3";
     default:
       return "bg-white/10 border-white/20";
   }
 };
+
+
 
 const getGlowShadow = (rating: number) => {
   switch (rating) {
@@ -39,8 +41,9 @@ const getGlowShadow = (rating: number) => {
 };
 
 const getRatingStars = (rating: number) => {
-  const filledClass = "fill-white text-white";
-  const unfilledClass = rating === 3 ? "text-black/40" : "text-white/50";
+  // 與 shareview 一致的星星顏色邏輯
+  const filledClass = rating === 2 || rating === 3 ? "fill-black text-black" : "fill-white text-white";
+  const unfilledClass = rating === 2 || rating === 3 ? "text-black/40" : "text-white/50";
 
   return Array.from({ length: 3 }, (_, index) => (
     <Star
@@ -65,18 +68,17 @@ export const BingoCard = ({
   return (
     <div
       className={cn(
-        "bingo-card relative w-full aspect-square min-h-0 group",
+        "bingo-card relative w-full aspect-square min-h-0",
         "flex flex-col items-center justify-center text-center",
         "rounded-lg sm:rounded-xl border-2 animate-fade-in transition-all duration-300",
         "p-2 sm:p-3",
         getRatingColor(rating),
-        rating === 3 ? "text-black" : rating > 0 ? "text-white" : "text-card-foreground",
+        // 與 shareview 一致的文字顏色邏輯
+        rating === 2 || rating === 3 ? "text-black" : rating > 0 ? "text-white" : "text-card-foreground",
         isLocked ? "cursor-not-allowed" : "cursor-pointer"
       )}
-      style={{ 
-        animationDelay: `${animationDelay}ms`, 
-        backgroundImage: rating > 0 ? 'none' : undefined,
-        boxShadow: isCompleted && rating > 0 ? getGlowShadow(rating) : undefined,
+      style={{
+        animationDelay: `${animationDelay}ms`,
         transition: 'all 0.3s ease-in-out'
       }}
       onClick={isLocked ? undefined : onClick}
@@ -93,17 +95,11 @@ export const BingoCard = ({
         </span>
       </div>
 
-      {rating > 0 && <div className="flex gap-0.5">{getRatingStars(rating)}</div>}
+      <div className={cn("flex gap-0.5", rating === 0 ? "invisible" : "visible")}>
+        {getRatingStars(rating)}
+      </div>
 
-      {/* 只有未選取時顯示淡色懸停浮層，避免覆蓋色塊 */}
-      {rating === 0 && (
-        <div
-          className={cn(
-            "absolute inset-0 rounded-xl transition-all duration-300 opacity-0 group-hover:opacity-100",
-            "bg-gradient-to-br from-primary/5 to-accent/5"
-          )}
-        />
-      )}
+
     </div>
   );
 };

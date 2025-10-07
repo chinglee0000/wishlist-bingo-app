@@ -136,12 +136,6 @@ const Index = () => {
 
   return (
     <div className="min-h-screen p-4">
-      {/* Floating decorative elements */}
-      <div className="fixed top-10 left-10 text-4xl animate-float">🦁</div>
-      <div className="fixed top-20 right-16 text-3xl animate-float" style={{ animationDelay: '1s' }}>🐘</div>
-      <div className="fixed bottom-32 left-8 text-3xl animate-float" style={{ animationDelay: '2s' }}>🦒</div>
-      <div className="fixed bottom-20 right-12 text-2xl animate-float" style={{ animationDelay: '0.5s' }}>🦊</div>
-      
       {!isShowingGrid ? (
         <CategoryNavigation
           categories={categories}
