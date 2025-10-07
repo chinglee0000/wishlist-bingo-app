@@ -1,5 +1,4 @@
 import { BingoCard } from "@/components/BingoCard";
-import { BingoShareView } from "@/components/BingoShareView";
 import { ProgressBar } from "@/components/ProgressBar";
 import { Button } from "@/components/ui/button";
 import { BingoGoal, BingoCategory } from "@/data/bingoGoals";
@@ -8,7 +7,6 @@ import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 import html2canvas from "html2canvas";
 import { shareToInstagramStory } from "@/utils/instagramShare";
-import { createRoot } from "react-dom/client";
 
 interface BingoGridProps {
   goals: BingoGoal[];
@@ -43,81 +41,99 @@ export const BingoGrid = ({
   const totalCount = gridSize * gridSize;
 
   const handleShare = async () => {
+    const categoryName = subcategoryName || category.name;
+
     try {
       toast({
         title: "正在準備分享...",
         description: "即將打開分享選項",
       });
 
-      // 創建一個臨時的 div 來渲染分享視圖
-      const tempDiv = document.createElement('div');
-      tempDiv.style.position = 'absolute';
-      tempDiv.style.left = '-9999px';
-      tempDiv.style.top = '-9999px';
-      tempDiv.style.width = '375px'; // 模擬移動端寬度
-      tempDiv.style.height = 'auto'; // 讓內容決定高度
-      document.body.appendChild(tempDiv);
+      // 創建專門用於分享的容器，使用純 HTML 和內聯樣式（回到工作版本的方法）
+      const shareContainer = document.createElement('div');
+      shareContainer.style.position = 'fixed';
+      shareContainer.style.top = '-9999px';
+      shareContainer.style.left = '-9999px';
+      shareContainer.style.width = '400px';
+      shareContainer.style.padding = '20px';
+      shareContainer.style.backgroundColor = '#1a1a2e';
+      shareContainer.style.borderRadius = '12px';
+      shareContainer.style.fontFamily = 'system-ui, -apple-system, sans-serif';
 
-      // 渲染 BingoShareView 到臨時 div
-      const root = createRoot(tempDiv);
+      shareContainer.innerHTML = `
+        <div style="text-align: center; margin-bottom: 20px;">
+          <h2 style="color: white; font-size: 24px; font-weight: bold; margin-bottom: 8px;">
+            ${category.icon} ${categoryName}
+          </h2>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(${gridSize}, 1fr); gap: 8px; margin-bottom: 20px;">
+          ${goals.map(goal => {
+            const rating = ratings.get(goal.id) || 0;
+            const bgColor = rating === 1 ? '#3b82f6' : rating === 2 ? '#22c55e' : rating === 3 ? '#eab308' : 'rgba(255,255,255,0.1)';
+            const textColor = rating === 3 ? '#000' : '#fff';
 
-      // 等待渲染完成
-      await new Promise<void>((resolve) => {
-        root.render(
-          <BingoShareView
-            goals={goals}
-            ratings={ratings}
-            category={category}
-            subcategoryName={subcategoryName}
-            gridSize={gridSize}
-            isCompleted={isCompleted}
-          />
-        );
+            // 生成星星，對應 BingoCard 的邏輯
+            const starsHtml = rating > 0 ? `
+              <div style="display: flex; gap: 2px; margin-top: 4px; justify-content: center;">
+                ${Array.from({ length: 3 }, (_, index) => {
+                  const isFilled = index < rating;
+                  const starColor = rating === 3 ? (isFilled ? '#000' : 'rgba(0,0,0,0.3)') : (isFilled ? '#fff' : 'rgba(255,255,255,0.3)');
+                  return `<span style="color: ${starColor}; font-size: 10px;">★</span>`;
+                }).join('')}
+              </div>
+            ` : '';
 
-        // 給 React 一些時間來渲染
-        setTimeout(resolve, 100);
-      });
+            return `
+              <div style="
+                background-color: ${bgColor};
+                color: ${textColor};
+                padding: 8px;
+                border-radius: 8px;
+                font-size: 11px;
+                text-align: center;
+                aspect-ratio: 1;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                word-wrap: break-word;
+                hyphens: auto;
+                position: relative;
+              ">
+                <div style="flex: 1; display: flex; align-items: center; justify-content: center; line-height: 1.2;">
+                  ${goal.text}
+                </div>
+                ${starsHtml}
+              </div>
+            `;
+          }).join('')}
+        </div>
+        <div style="text-align: center; color: rgba(255,255,255,0.6); font-size: 12px;">
+          Powered by Zoo Financial
+        </div>
+      `;
 
-      // 生成 canvas
-      const canvas = await html2canvas(tempDiv, {
-        backgroundColor: '#0f0f23',
-        scale: 3,
+      document.body.appendChild(shareContainer);
+
+      const canvas = await html2canvas(shareContainer, {
+        backgroundColor: '#1a1a2e',
+        scale: 2,
         useCORS: true,
         allowTaint: true,
-        logging: true,
-        removeContainer: true,
-        foreignObjectRendering: false,
-        imageTimeout: 0,
-        ignoreElements: () => false,
       });
 
-      // 清理臨時元素
-      root.unmount();
-      document.body.removeChild(tempDiv);
+      document.body.removeChild(shareContainer);
 
-      // 測試：直接下載圖片來檢查 canvas 是否正常
-      const link = document.createElement('a');
-      link.download = 'bingo-share.png';
-      link.href = canvas.toDataURL();
-      link.click();
-
-      // 然後再嘗試分享
       const success = await shareToInstagramStory(canvas);
 
       if (success) {
         toast({
           title: "分享成功！",
-          description: "已打開分享選項",
-        });
-      } else {
-        toast({
-          title: "已準備圖片",
-          description: "請選擇分享方式",
+          description: "已成功分享到 Instagram 限時動態",
         });
       }
-
     } catch (error) {
-      console.error('Share failed:', error);
+      console.error('分享失敗:', error);
       toast({
         title: "分享失敗",
         description: "請稍後再試",
