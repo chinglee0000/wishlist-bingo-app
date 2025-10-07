@@ -4,14 +4,25 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Wishlist Bingo App</title>
+    <meta name="description" content="Interactive wishlist bingo game">
+    <meta name="author" content="Zoo Financial" />
     <script>
-      window.location.href = './pages/wishlist-bingo.html';
+      // GitHub Pages SPA redirect handling
+      (function(l) {
+        if (l.search[1] === '/' ) {
+          var decoded = l.search.slice(1).split('&').map(function(s) {
+            return s.replace(/~and~/g, '&')
+          }).join('?');
+          window.history.replaceState(null, null,
+              l.pathname.slice(0, -1) + decoded + l.hash
+          );
+        }
+      }(window.location))
     </script>
+    <script type="module" crossorigin src="/wishlist-bingo-app/assets/index-DJIcvbFI.js"></script>
+    <link rel="stylesheet" crossorigin href="/wishlist-bingo-app/assets/index-Ba7zIbfk.css">
   </head>
   <body>
-    <div style="text-align: center; padding: 50px;">
-      <h1>Redirecting to Wishlist Bingo...</h1>
-      <p>If you are not redirected automatically, <a href="./pages/wishlist-bingo.html">click here</a>.</p>
-    </div>
+    <div id="root"></div>
   </body>
 </html>
