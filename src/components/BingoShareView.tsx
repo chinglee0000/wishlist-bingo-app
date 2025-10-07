@@ -89,18 +89,19 @@ export const BingoShareView = ({
             <div
               key={goal.id}
               className={cn(
-                "bingo-card relative w-full aspect-square min-h-0 group",
+                "relative w-full aspect-square min-h-0 group",
                 "flex flex-col items-center justify-center text-center",
-                "rounded-lg sm:rounded-xl border-2 animate-fade-in transition-all duration-300",
+                "rounded-lg sm:rounded-xl border-2 transition-all duration-300",
                 "p-2",
                 getRatingColor(rating),
                 rating === 3 ? "text-black" : rating > 0 ? "text-white" : "text-card-foreground"
               )}
               style={{
-                backgroundImage: rating > 0 ? 'none' : undefined,
-                boxShadow: isCompleted && rating > 0 ? getGlowShadow(rating) : undefined,
+                backgroundImage: rating > 0 ? 'none' : 'linear-gradient(145deg, hsl(0 0% 100% / 0.8), hsl(250 100% 97% / 0.6))',
+                boxShadow: isCompleted && rating > 0 ? getGlowShadow(rating) : '0 8px 32px hsl(264 84% 70% / 0.15)',
                 transition: 'all 0.3s ease-in-out'
               }}
+
             >
               <div className="flex-1 flex items-center justify-center mb-1 min-h-0">
                 <span
