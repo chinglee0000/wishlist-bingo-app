@@ -46,7 +46,7 @@ const getRatingStars = (rating: number) => {
     <Star
       key={index}
       className={cn(
-        "w-3 h-3 transition-all duration-300 drop-shadow-[0_0_2px_rgba(0,0,0,0.25)]",
+        "w-2.5 h-2.5 sm:w-3 sm:h-3 transition-all duration-300 drop-shadow-[0_0_2px_rgba(0,0,0,0.25)]",
         index < rating ? filledClass : unfilledClass
       )}
     />
@@ -84,8 +84,8 @@ export const BingoCard = ({
       <div className="flex-1 flex items-center justify-center mb-1 sm:mb-2 min-h-0">
         <span
           className={cn(
-            "text-sm sm:text-base md:text-lg font-medium leading-tight transition-all duration-300",
-            "break-words hyphens-auto overflow-hidden",
+            "text-xs sm:text-sm md:text-base font-medium leading-tight transition-all duration-300",
+            "break-words hyphens-auto overflow-hidden text-center",
             rating > 0 ? "font-semibold" : undefined
           )}
         >

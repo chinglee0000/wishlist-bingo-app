@@ -143,7 +143,7 @@ export const BingoGrid = ({
   };
 
   return (
-    <div className="max-w-4xl mx-auto bingo-container relative">
+    <div className="max-w-4xl mx-auto bingo-container relative px-4 sm:px-6 lg:px-8">
       {/* Header */}
       <div className="text-center mb-8 animate-fade-in">
         <h1 className="text-3xl md:text-4xl font-bold text-white mb-4 drop-shadow-lg flex items-center justify-center gap-3">
@@ -155,7 +155,8 @@ export const BingoGrid = ({
       {/* Bingo Grid */}
       <div
         className={cn(
-          "bingo-grid grid gap-2 sm:gap-3 md:gap-4 mb-8 animate-scale-in mx-auto max-w-lg md:max-w-2xl",
+          "bingo-grid grid gap-1 sm:gap-2 md:gap-3 mb-8 animate-scale-in mx-auto px-4 sm:px-6",
+          "w-full max-w-xs sm:max-w-sm md:max-w-lg lg:max-w-xl",
           gridSize === 4 && "grid-cols-4",
           gridSize === 5 && "grid-cols-5"
         )}
