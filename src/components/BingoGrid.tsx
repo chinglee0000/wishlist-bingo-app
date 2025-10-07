@@ -47,59 +47,12 @@ export const BingoGrid = ({
         description: "即將打開分享選項",
       });
 
-      // 直接截取整個賓果容器，然後隱藏按鈕
-      const bingoContainer = document.querySelector('.bingo-container');
-
-      if (!bingoContainer) {
-        throw new Error('找不到賓果容器');
-      }
-
-      // 暫時隱藏所有按鈕
-      const buttons = bingoContainer.querySelectorAll('button');
-      const buttonStyles: string[] = [];
-
-      buttons.forEach((button, index) => {
-        buttonStyles[index] = (button as HTMLElement).style.display;
-        (button as HTMLElement).style.display = 'none';
-      });
-
-      // 創建分享容器
-      const shareContainer = document.createElement('div');
-      shareContainer.style.position = 'fixed';
-      shareContainer.style.top = '-9999px';
-      shareContainer.style.left = '-9999px';
-      shareContainer.style.padding = '20px';
-      shareContainer.style.backgroundColor = '#1a1a2e';
-      shareContainer.style.borderRadius = '12px';
-
-      // 複製賓果容器
-      const clonedContainer = bingoContainer.cloneNode(true) as HTMLElement;
-      shareContainer.appendChild(clonedContainer);
-
-      // 添加 "Powered by Zoo Financial"
-      const footer = document.createElement('div');
-      footer.style.textAlign = 'center';
-      footer.style.color = 'rgba(255,255,255,0.6)';
-      footer.style.fontSize = '12px';
-      footer.style.marginTop = '20px';
-      footer.textContent = 'Powered by Zoo Financial';
-      shareContainer.appendChild(footer);
-
-      document.body.appendChild(shareContainer);
-
-      const canvas = await html2canvas(shareContainer, {
+      // 最簡單的測試：直接截取整個頁面
+      const canvas = await html2canvas(document.body, {
         backgroundColor: '#1a1a2e',
-        scale: 2,
+        scale: 1,
         useCORS: true,
         allowTaint: true,
-        foreignObjectRendering: true,
-      });
-
-      document.body.removeChild(shareContainer);
-
-      // 恢復按鈕顯示
-      buttons.forEach((button, index) => {
-        (button as HTMLElement).style.display = buttonStyles[index];
       });
 
       const success = await shareToInstagramStory(canvas);
