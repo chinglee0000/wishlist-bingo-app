@@ -51,7 +51,7 @@ export const BingoGrid = ({
 
       // 找到標題和賓果網格元素
       const headerElement = document.querySelector('.bingo-container h1');
-      const gridElement = document.querySelector('.bingo-container .grid');
+      const gridElement = document.querySelector('.bingo-container .bingo-grid');
 
       if (!gridElement || !headerElement) {
         throw new Error('找不到賓果元素');
@@ -135,7 +135,7 @@ export const BingoGrid = ({
       {/* Bingo Grid */}
       <div
         className={cn(
-          "grid gap-2 sm:gap-3 md:gap-4 mb-8 animate-scale-in mx-auto max-w-lg md:max-w-2xl",
+          "bingo-grid grid gap-2 sm:gap-3 md:gap-4 mb-8 animate-scale-in mx-auto max-w-lg md:max-w-2xl",
           gridSize === 4 && "grid-cols-4",
           gridSize === 5 && "grid-cols-5"
         )}
