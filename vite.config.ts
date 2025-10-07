@@ -16,12 +16,4 @@ export default defineConfig(({ mode }) => ({
     },
   },
   base: mode === "production" ? "/wishlist-bingo-app/" : "/",
-  build: {
-    rollupOptions: {
-      input: {
-        index: path.resolve(__dirname, 'index.html'),
-        'pages/wishlist-bingo': path.resolve(__dirname, 'pages/wishlist-bingo.html'),
-      }
-    }
-  }
 }));
