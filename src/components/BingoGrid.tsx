@@ -78,7 +78,7 @@ export const BingoGrid = ({
                 ${Array.from({ length: 3 }, (_, index) => {
                   const isFilled = index < rating;
                   const starColor = rating === 3 ? (isFilled ? '#000' : 'rgba(0,0,0,0.3)') : (isFilled ? '#fff' : 'rgba(255,255,255,0.3)');
-                  return `<span style="color: ${starColor}; font-size: 12px;">★</span>`;
+                  return `<span style="color: ${starColor}; font-size: 16px;">★</span>`;
                 }).join('')}
               </div>
             ` : '';
@@ -89,7 +89,7 @@ export const BingoGrid = ({
                 color: ${textColor};
                 padding: 8px;
                 border-radius: 8px;
-                font-size: 12px;
+                font-size: 16px;
                 text-align: center;
                 aspect-ratio: 1;
                 display: flex;
@@ -100,7 +100,7 @@ export const BingoGrid = ({
                 hyphens: auto;
                 position: relative;
               ">
-                <div style="flex: 1; display: flex; align-items: center; justify-content: center; line-height: 1.2;">
+                <div style="flex: 1; display: flex; align-items: center; justify-content: center; line-height: 1.2; transform: translateY(-4px);">
                   ${goal.text}
                 </div>
                 ${starsHtml}
@@ -108,7 +108,7 @@ export const BingoGrid = ({
             `;
           }).join('')}
         </div>
-        <div style="text-align: center; color: rgba(255,255,255,0.6); font-size: 10px;">
+        <div style="text-align: center; color: rgba(255,255,255,0.6); font-size: 12px;">
           Powered by Zoo Financial
         </div>
       `;
