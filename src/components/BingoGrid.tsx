@@ -41,23 +41,29 @@ export const BingoGrid = ({
   const totalCount = gridSize * gridSize;
 
   const handleShare = async () => {
-    const categoryName = subcategoryName || category.name;
-
     try {
       toast({
         title: "正在準備分享...",
         description: "即將打開分享選項",
       });
 
-      // 找到標題和賓果網格元素
-      const headerElement = document.querySelector('.bingo-container h1');
-      const gridElement = document.querySelector('.bingo-container .bingo-grid');
+      // 直接截取整個賓果容器，然後隱藏按鈕
+      const bingoContainer = document.querySelector('.bingo-container');
 
-      if (!gridElement || !headerElement) {
-        throw new Error('找不到賓果元素');
+      if (!bingoContainer) {
+        throw new Error('找不到賓果容器');
       }
 
-      // 創建分享專用容器
+      // 暫時隱藏所有按鈕
+      const buttons = bingoContainer.querySelectorAll('button');
+      const buttonStyles: string[] = [];
+
+      buttons.forEach((button, index) => {
+        buttonStyles[index] = (button as HTMLElement).style.display;
+        (button as HTMLElement).style.display = 'none';
+      });
+
+      // 創建分享容器
       const shareContainer = document.createElement('div');
       shareContainer.style.position = 'fixed';
       shareContainer.style.top = '-9999px';
@@ -65,24 +71,17 @@ export const BingoGrid = ({
       shareContainer.style.padding = '20px';
       shareContainer.style.backgroundColor = '#1a1a2e';
       shareContainer.style.borderRadius = '12px';
-      shareContainer.style.maxWidth = '400px';
-      shareContainer.style.fontFamily = 'system-ui, -apple-system, sans-serif';
 
-      // 複製標題
-      const clonedHeader = headerElement.cloneNode(true) as HTMLElement;
-      clonedHeader.style.marginBottom = '20px';
-      shareContainer.appendChild(clonedHeader);
-
-      // 複製賓果網格
-      const clonedGrid = gridElement.cloneNode(true) as HTMLElement;
-      clonedGrid.style.marginBottom = '20px';
-      shareContainer.appendChild(clonedGrid);
+      // 複製賓果容器
+      const clonedContainer = bingoContainer.cloneNode(true) as HTMLElement;
+      shareContainer.appendChild(clonedContainer);
 
       // 添加 "Powered by Zoo Financial"
       const footer = document.createElement('div');
       footer.style.textAlign = 'center';
       footer.style.color = 'rgba(255,255,255,0.6)';
       footer.style.fontSize = '12px';
+      footer.style.marginTop = '20px';
       footer.textContent = 'Powered by Zoo Financial';
       shareContainer.appendChild(footer);
 
@@ -97,6 +96,11 @@ export const BingoGrid = ({
       });
 
       document.body.removeChild(shareContainer);
+
+      // 恢復按鈕顯示
+      buttons.forEach((button, index) => {
+        (button as HTMLElement).style.display = buttonStyles[index];
+      });
 
       const success = await shareToInstagramStory(canvas);
 
