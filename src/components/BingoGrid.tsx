@@ -291,7 +291,7 @@ export const BingoGrid = ({
       {/* Bingo Grid */}
       <div
         className={cn(
-          "bingo-grid grid mb-8 animate-scale-in mx-auto",
+          "bingo-grid grid mb-16 animate-scale-in mx-auto",
           gridSize === 4 && "grid-cols-4 gap-2 sm:gap-3 md:gap-4 max-w-lg md:max-w-2xl",
           gridSize === 5 && "grid-cols-5 gap-1.5 sm:gap-2 md:gap-3 max-w-sm sm:max-w-lg md:max-w-xl"
         )}
@@ -367,13 +367,13 @@ export const BingoGrid = ({
       </div>
 
       {/* Add bottom padding to prevent content being hidden behind footer */}
-      <div className="h-48"></div>
+      <div className="h-56"></div>
 
       {/* Back Button - Bottom Right */}
       <Button
         variant="ghost"
         onClick={onBack}
-        className="fixed bottom-4 right-4 z-10 bg-black/20 text-white hover:bg-black/40 backdrop-blur-sm border border-white/20 rounded-full w-12 h-12 p-0"
+        className="fixed bottom-20 right-4 z-10 bg-black/20 text-white hover:bg-black/40 backdrop-blur-sm border border-white/20 rounded-full w-12 h-12 p-0"
       >
         <ArrowLeft className="w-5 h-5" />
       </Button>
